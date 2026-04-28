@@ -14,7 +14,7 @@ ALLOWED_HOSTS = ["*"]
 
 
 CORS_ALLOWED_ORIGINS = [
-   
+    "http://localhost:5173",
     "https://frontend-starter-blush.vercel.app",
 ]
 
@@ -24,24 +24,15 @@ CSRF_TRUSTED_ORIGINS = [
     "https://frontend-starter-blush.vercel.app",
 ]
 
-DJANGO_APPS = [
+INSTALLED_APPS = [
     "corsheaders",
     "django.contrib.contenttypes",
     "django.contrib.auth",
-    
-]
-
-THIRD_PARTY_APPS = [
     "rest_framework",
     "django_celery_results",
-]
-
-LOCAL_APPS = [
     "src.document",
     "src.outbox",
 ]
-
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
