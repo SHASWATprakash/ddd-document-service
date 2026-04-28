@@ -13,12 +13,22 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+CORS_ALLOWED_ORIGINS = [
+   
+    "https://frontend-starter-blush.vercel.app",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://frontend-starter-blush.vercel.app",
+]
 
 DJANGO_APPS = [
+    "corsheaders",
     "django.contrib.contenttypes",
     "django.contrib.auth",
-    "corsheaders",
+    
 ]
 
 THIRD_PARTY_APPS = [
