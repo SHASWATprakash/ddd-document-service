@@ -1,4 +1,8 @@
+import os
 from pathlib import Path
+
+import dj_database_url
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -7,6 +11,7 @@ SECRET_KEY = "django-insecure-change-this-in-production"
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
+
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 
@@ -38,15 +43,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "document_db",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "db",
-        "PORT": "5432",
-    }
+    "default": dj_database_url.config(
+        default=os.getenv(
+            "DATABASE_URL",
+            "postgres://postgres:postgres@db:5432/document_db"
+        )
+    )
 }
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
