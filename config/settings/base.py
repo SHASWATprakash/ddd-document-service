@@ -8,9 +8,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+
 DJANGO_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.auth",
+    "corsheaders",
 ]
 
 THIRD_PARTY_APPS = [
@@ -26,9 +29,12 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.common.CommonMiddleware",
 ]
+
+
 
 ROOT_URLCONF = "config.urls"
 

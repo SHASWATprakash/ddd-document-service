@@ -7,6 +7,7 @@ from ...domain.repository import DocumentRepository
 from ...domain.services import DocumentUniquenessService
 from ..mapper import DocumentMapper
 from ..models import DocumentModel
+from src.document.models import DocumentModel
 
 
 class DjangoDocumentRepository(DocumentRepository, DocumentUniquenessService):
@@ -14,6 +15,14 @@ class DjangoDocumentRepository(DocumentRepository, DocumentUniquenessService):
     Adapter: implements both the repository port and uniqueness service
     using Django ORM backed by PostgreSQL.
     """
+    def __init__(self):
+        self.model = DocumentModel
+
+    def get_all(self):
+        return self.model.objects.all()
+
+    def create(self, data):
+        return self.model.objects.create(**data)
 
     def find_by_reference(self, reference: str) -> Optional[Document]:
         try:
@@ -38,3 +47,6 @@ class DjangoDocumentRepository(DocumentRepository, DocumentUniquenessService):
     # DocumentUniquenessService
     def is_reference_taken(self, reference: str) -> bool:
         return self.exists_by_reference(reference)
+    
+    def list_all(self):
+     return self.model.objects.all()

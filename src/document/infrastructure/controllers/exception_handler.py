@@ -25,3 +25,8 @@ def custom_exception_handler(exc, context):
         {"error": "An unexpected error occurred."},
         status=status.HTTP_500_INTERNAL_SERVER_ERROR,
     )
+
+def custom_exception_handler(exc, context):
+    import traceback
+    traceback.print_exc()
+    return Response({"error": str(exc)}, status=500)

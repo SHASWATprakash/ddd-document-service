@@ -23,12 +23,22 @@ from .serializers import (
 
 def _serialize_document(document: Document) -> dict:
     return {
-        "reference": str(document.reference),
+        "reference": str(document.reference),  
         "description": str(document.description),
-        "document_type": document.document_type.value,
+        "document_type": (
+            document.document_type.value
+            if hasattr(document.document_type, "value")
+            else document.document_type
+        ),
         "line_item_count": document.line_item_count,
-        "line_item_limit": document.line_item_limit.value,
-        "created_at": document.created_at.isoformat() if document.created_at else None,
+        "line_item_limit": (
+            document.line_item_limit.value
+            if hasattr(document.line_item_limit, "value")
+            else document.line_item_limit
+        ),
+        "created_at": document.created_at.isoformat()
+        if document.created_at
+        else None,
     }
 
 
@@ -37,6 +47,15 @@ def _get_repository() -> DjangoDocumentRepository:
 
 
 class DocumentListView(APIView):
+    def get(self, request: Request) -> Response:
+        repo = _get_repository()
+
+        # You need a list method in repo (we'll fix next)
+        documents = repo.list_all()
+
+        data = [_serialize_document(doc) for doc in documents]
+        return Response(data, status=status.HTTP_200_OK)
+    
     def post(self, request: Request) -> Response:
         serializer = CreateDocumentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
