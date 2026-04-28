@@ -46,15 +46,17 @@ ROOT_URLCONF = "config.urls"
 
 
 
+
+
 DATABASES = {
     "default": dj_database_url.config(
-        default=os.getenv(
-            "DATABASE_URL",
-            "postgres://postgres:postgres@localhost:5432/document_db"
-        ),
+        default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
     )
 }
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
