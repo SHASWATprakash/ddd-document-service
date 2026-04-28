@@ -33,6 +33,7 @@ services:
       - "8000:8000"
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.development
+      DATABASE_URL: postgres://postgres:postgres@db:5432/document_db
     depends_on:
       db:
         condition: service_healthy

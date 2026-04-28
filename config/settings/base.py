@@ -44,12 +44,15 @@ MIDDLEWARE = [
 ROOT_URLCONF = "config.urls"
 
 
+
+
 DATABASES = {
     "default": dj_database_url.config(
         default=os.getenv(
             "DATABASE_URL",
-            "postgres://postgres:postgres@db:5432/document_db"
-        )
+            "postgres://postgres:postgres@localhost:5432/document_db"
+        ),
+        conn_max_age=600,
     )
 }
 
